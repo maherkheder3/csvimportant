@@ -1,3 +1,4 @@
+
 DROP table if exists article;
 
 create table article(
@@ -24,10 +25,10 @@ create table article(
   RABATT bool, # falsch = 0 , wahr ? true
   VKPREIS3 bool,
   VKVALIDD3 bool,
-  VKBISDT1 int,
+  VKBISDT1 integer,
   VKBISDT2 date,
   VKBISDT3 date,
-  STAFRABATT date, # 0 is null
+  STAFRABATT date, #isnull
   FAKTOR date,
   ISZUSATZ00 varchar(255),
   ISZUSATZ01 varchar(255),
@@ -85,19 +86,20 @@ create table article(
   KAT_3	Varchar(255),
   KAT_4	Varchar(255),
   KAT_5	Varchar(255),
-  BF_id int,
+  BF_id integer, # BF_BLAU	BF_LILA	BF_ROSA	BF_WEISS	BF_GELB	BF_ORANGE	BF_ROT	BF_MEHRF	BF_GRUEN	BF_PINK	BF_SCHWARZ
+  FF_id integer, # 	FF_BLAU	FF_ORANGE	FF_WEISS	FF_GELB	FF_ROT	FF_GRUEN	FF_SCHWARZ
 
-  ISZUSATZ51 int, # monthes id
-  ISZUSATZ52 int, # monthes id
-  ISZUSATZ53 int, # monthes id
+  ISZUSATZ51 integer , # monthes id
+  ISZUSATZ52 integer, # monthes id
+  ISZUSATZ53 integer, # monthes id
   ISZUSATZ54 VARCHAR(255),
-  pflanzen_type int, # id von : halbschattig, sonnig
-  ISZUSATZ55 int, # löchen "cm"
-  ISZUSATZ56 int, # löchen "cm"
+  pflanzen_type integer, # id von : halbschattig, sonnig
+  ISZUSATZ55 integer, # löchen "cm"
+  ISZUSATZ56 integer, # löchen "cm"
   LAUB_IG bool,
   LAUB_LA bool,
   LAUB_WG bool,
-  BESTELLT int,
+  BESTELLT integer,
   GELIEFERT bool,
   OFFEN bool,
   LIETERMIN DATETIME,
@@ -110,7 +112,7 @@ create table article(
 DROP table if exists colors;
 
 create table colors (
-  id int,
+  id integer,
   name VARCHAR(50)
 );
 
@@ -136,3 +138,4 @@ values
 (17, "GRUEN"),
 (18, "SCHWARZ")
 ;
+
