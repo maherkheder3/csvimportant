@@ -17,7 +17,7 @@ create table article(
   DKZ4 integer,
   PREIS_GRP varchar(255),
   BIS_MENGE integer,
-  price decimal,  #VKVALIDD1	VKPREIS1	VKVALIDD2	VKPREIS2
+  price float,  #VKVALIDD1	VKPREIS1	VKVALIDD2	VKPREIS2
   STKPREIS bool,# falsch = 0 , wahr ? true
   GP_MENGE integer,
   GP_EINHEIT integer,
@@ -28,7 +28,7 @@ create table article(
   VKBISDT1 integer,
   VKBISDT2 date,
   VKBISDT3 date,
-  STAFRABATT date, #isnull
+  STAFRABATT date, # 0 is null
   FAKTOR date,
   ISZUSATZ00 varchar(255),
   ISZUSATZ01 varchar(255),
@@ -81,20 +81,18 @@ create table article(
   ISZUSATZ48	Varchar(255),
   ISZUSATZ49	Varchar(255),
   ISZUSATZ50	Varchar(255),
+  ISZUSATZ51 integer, # monthes id
+  ISZUSATZ52 integer, # monthes id
+  ISZUSATZ53 integer, # monthes id
+  ISZUSATZ54 VARCHAR(255),
+  ISZUSATZ55 integer,
+  ISZUSATZ56 integer,
   KAT_1	Varchar(255),
   KAT_2	Varchar(255),
   KAT_3	Varchar(255),
   KAT_4	Varchar(255),
   KAT_5	Varchar(255),
-  BF_id integer, # BF_BLAU	BF_LILA	BF_ROSA	BF_WEISS	BF_GELB	BF_ORANGE	BF_ROT	BF_MEHRF	BF_GRUEN	BF_PINK	BF_SCHWARZ
-  FF_id integer, # 	FF_BLAU	FF_ORANGE	FF_WEISS	FF_GELB	FF_ROT	FF_GRUEN	FF_SCHWARZ
-  ISZUSATZ51 integer , # monthes id
-  ISZUSATZ52 integer, # monthes id
-  ISZUSATZ53 integer, # monthes id
-  ISZUSATZ54 VARCHAR(255),
   pflanzen_type integer, # id von : halbschattig, sonnig
-  ISZUSATZ55 integer, # löchen "cm"
-  ISZUSATZ56 integer, # löchen "cm"
   LAUB_IG bool,
   LAUB_LA bool,
   LAUB_WG bool,
@@ -103,8 +101,10 @@ create table article(
   OFFEN bool,
   LIETERMIN DATETIME,
   GEWICHT float,
-  VERF_BEST decimal,
-  MARKE VARCHAR(255)
+  VERF_BEST float,
+  MARKE VARCHAR(255),
+  BF_id integer, # BF_BLAU	BF_LILA	BF_ROSA	BF_WEISS	BF_GELB	BF_ORANGE	BF_ROT	BF_MEHRF	BF_GRUEN	BF_PINK	BF_SCHWARZ
+  FF_id integer # 	FF_BLAU	FF_ORANGE	FF_WEISS	FF_GELB	FF_ROT	FF_GRUEN	FF_SCHWARZ
 ); # MARKE
 
 

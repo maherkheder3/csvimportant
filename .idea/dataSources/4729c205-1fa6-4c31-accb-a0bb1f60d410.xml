@@ -1024,7 +1024,7 @@
     </column>
     <column id="257" parent="240" name="price">
       <Position>16</Position>
-      <DataType>decimal(10)|0s</DataType>
+      <DataType>float|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="258" parent="240" name="STKPREIS">
@@ -1342,57 +1342,57 @@
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="321" parent="240" name="KAT_1">
+    <column id="321" parent="240" name="ISZUSATZ51">
       <Position>80</Position>
-      <DataType>varchar(255)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="322" parent="240" name="KAT_2">
+    <column id="322" parent="240" name="ISZUSATZ52">
       <Position>81</Position>
-      <DataType>varchar(255)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="323" parent="240" name="KAT_3">
+    <column id="323" parent="240" name="ISZUSATZ53">
       <Position>82</Position>
-      <DataType>varchar(255)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="324" parent="240" name="KAT_4">
+    <column id="324" parent="240" name="ISZUSATZ54">
       <Position>83</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="325" parent="240" name="KAT_5">
+    <column id="325" parent="240" name="ISZUSATZ55">
       <Position>84</Position>
-      <DataType>varchar(255)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="326" parent="240" name="BF_id">
+    <column id="326" parent="240" name="ISZUSATZ56">
       <Position>85</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="327" parent="240" name="FF_id">
+    <column id="327" parent="240" name="KAT_1">
       <Position>86</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="328" parent="240" name="ISZUSATZ51">
+    <column id="328" parent="240" name="KAT_2">
       <Position>87</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="329" parent="240" name="ISZUSATZ52">
+    <column id="329" parent="240" name="KAT_3">
       <Position>88</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="330" parent="240" name="ISZUSATZ53">
+    <column id="330" parent="240" name="KAT_4">
       <Position>89</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="331" parent="240" name="ISZUSATZ54">
+    <column id="331" parent="240" name="KAT_5">
       <Position>90</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
@@ -1402,64 +1402,64 @@
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="333" parent="240" name="ISZUSATZ55">
+    <column id="333" parent="240" name="LAUB_IG">
       <Position>92</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>tinyint(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="334" parent="240" name="ISZUSATZ56">
+    <column id="334" parent="240" name="LAUB_LA">
       <Position>93</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>tinyint(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="335" parent="240" name="LAUB_IG">
+    <column id="335" parent="240" name="LAUB_WG">
       <Position>94</Position>
       <DataType>tinyint(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="336" parent="240" name="LAUB_LA">
+    <column id="336" parent="240" name="BESTELLT">
       <Position>95</Position>
-      <DataType>tinyint(1)|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="337" parent="240" name="LAUB_WG">
+    <column id="337" parent="240" name="GELIEFERT">
       <Position>96</Position>
       <DataType>tinyint(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="338" parent="240" name="BESTELLT">
+    <column id="338" parent="240" name="OFFEN">
       <Position>97</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>tinyint(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="339" parent="240" name="GELIEFERT">
+    <column id="339" parent="240" name="LIETERMIN">
       <Position>98</Position>
-      <DataType>tinyint(1)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="340" parent="240" name="OFFEN">
-      <Position>99</Position>
-      <DataType>tinyint(1)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="341" parent="240" name="LIETERMIN">
-      <Position>100</Position>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="342" parent="240" name="GEWICHT">
-      <Position>101</Position>
+    <column id="340" parent="240" name="GEWICHT">
+      <Position>99</Position>
       <DataType>float|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="343" parent="240" name="VERF_BEST">
-      <Position>102</Position>
-      <DataType>decimal(10)|0s</DataType>
+    <column id="341" parent="240" name="VERF_BEST">
+      <Position>100</Position>
+      <DataType>float|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="344" parent="240" name="MARKE">
-      <Position>103</Position>
+    <column id="342" parent="240" name="MARKE">
+      <Position>101</Position>
       <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="343" parent="240" name="BF_id">
+      <Position>102</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="344" parent="240" name="FF_id">
+      <Position>103</Position>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="345" parent="241" name="id">
