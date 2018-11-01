@@ -1434,7 +1434,7 @@
     </column>
     <column id="339" parent="240" name="LIETERMIN">
       <Position>98</Position>
-      <DataType>datetime|0s</DataType>
+      <DataType>date|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="340" parent="240" name="GEWICHT">

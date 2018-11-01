@@ -9,12 +9,23 @@ $password = "1";
 $dbname = "csvimport";
 
 
+
+
+
+
+
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     // set the PDO error mode to exception
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    // create new database
+    $sql = file_get_contents('sqlquery.sql');
+    $qr = $conn->exec($sql);
+
     echo "connicatien is ok".PHP_EOL;
+
+
 }
 catch(PDOException $e)
 {
@@ -40,13 +51,14 @@ function home()
     global $values_list;
     foreach ($values_list as $row)
     {
-        $values = change_value($row);
-
+        $start_values = change_value($row);
+        $values = mb_convert_encoding($start_values, "Windows-1252", "UTF-8");
+        $values = stripslashes($values);
         $sql = "INSERT INTO article (id, mwst, RES_ZEIT, WARENGR, INTERNET, SAISON_KZ, title, description, DKZ1, DKZ2, DKZ3, SYS_ANLAGE, DKZ4, PREIS_GRP, BIS_MENGE, price, STKPREIS, GP_MENGE, GP_EINHEIT, PACK_MENGE, RABATT, VKPREIS3, VKVALIDD3, VKBISDT1, VKBISDT2, VKBISDT3, STAFRABATT, FAKTOR, ISZUSATZ00, ISZUSATZ01, ISZUSATZ02, ISZUSATZ03, ISZUSATZ04, ISZUSATZ05, ISZUSATZ06, ISZUSATZ07, ISZUSATZ08, ISZUSATZ09, ISZUSATZ10, ISZUSATZ11, ISZUSATZ12, ISZUSATZ13, ISZUSATZ14, ISZUSATZ15, ISZUSATZ16, ISZUSATZ17, ISZUSATZ18, ISZUSATZ19, ISZUSATZ20, ISZUSATZ21, ISZUSATZ22, ISZUSATZ23, ISZUSATZ24, ISZUSATZ25, ISZUSATZ26, ISZUSATZ27, ISZUSATZ28, ISZUSATZ29, ISZUSATZ30, ISZUSATZ31, ISZUSATZ32, ISZUSATZ33, ISZUSATZ34, ISZUSATZ35, ISZUSATZ36, ISZUSATZ37, ISZUSATZ38, ISZUSATZ39, ISZUSATZ40, ISZUSATZ41, ISZUSATZ42, ISZUSATZ43, ISZUSATZ44, ISZUSATZ45, ISZUSATZ46, ISZUSATZ47, ISZUSATZ48, ISZUSATZ49, ISZUSATZ50, ISZUSATZ51, ISZUSATZ52, ISZUSATZ53, ISZUSATZ54, ISZUSATZ55, ISZUSATZ56, KAT_1, KAT_2, KAT_3, KAT_4, KAT_5, pflanzen_type, LAUB_IG, LAUB_LA, LAUB_WG, BESTELLT, GELIEFERT, OFFEN, LIETERMIN, GEWICHT, VERF_BEST, MARKE, BF_id, FF_id) VALUES ($values)";
 
         try{
             $conn->exec($sql);
-            echo PHP_EOL . "install is ok in row : " . $row["NUMMER"] . $row["WM"];
+            echo "<p>" . $row["NUMMER"] . $row["WM"] . "</p>";
         }catch(PDOException $e){
             echo PHP_EOL . $sql . PHP_EOL . $e->getMessage() . PHP_EOL. "error in row : " .$row["id"] .PHP_EOL;
         }
@@ -208,7 +220,7 @@ function change_value($row)
         "'" . $row["ISZUSATZ33"]  . "',"  .     //ISZUSATZ33	Varchar(255),
         "'" . $row["ISZUSATZ34"]  . "',"  .     //ISZUSATZ34	Varchar(255),
         "'" . $row["ISZUSATZ35"]  . "',"  .     //ISZUSATZ35	Varchar(255),
-        "'" . $row["ISZUSATZ36"]  . "',"  .     //ISZUSATZ36	Varchar(255),  # löchen "cm"
+        "'" . str_replace("cm", "", $row["ISZUSATZ36"])  . "',"  .     //ISZUSATZ36	Varchar(255),  # löchen "cm"
         "'" . $row["ISZUSATZ37"]  . "',"  .     //ISZUSATZ37	Varchar(255),
         "'" . $row["ISZUSATZ38"]  . "',"  .     //ISZUSATZ38	Varchar(255),
         "'" . $row["ISZUSATZ39"]  . "',"  .     //ISZUSATZ39	Varchar(255),
@@ -241,7 +253,7 @@ function change_value($row)
         result_integer($row["BESTELLT"]) . "," .    //BESTELLT integer,
         result_bool($row["GELIEFERT"]) . "," .    //GELIEFERT bool,
         result_bool($row["OFFEN"]) . "," .    //OFFEN bool,
-        result_date($row["LIETERMIN"]) . "," .    //LIETERMIN DATETIME,
+        result_date($row["LIETERMIN"]) . "," .    //   IN date,
         result_integer($row["GEWICHT"]) . "," .    //GEWICHT float,
         5 . "," .    //VERF_BEST decimal,
         "'" . $row["MARKE"]  . "',"  .     //MARKE VARCHAR(255)
@@ -282,7 +294,7 @@ function read_file()
 
             array_push($values_list, $array);
 
-            if(count($values_list) > 10){
+            if(count($values_list) > 100){
                 ////////////////////////////////////////////////////////////
                 return;
             }
