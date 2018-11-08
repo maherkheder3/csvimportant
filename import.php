@@ -1,6 +1,8 @@
 <?php
 error_reporting(0);
 ini_set('display_errors', 0);
+header('Content-Type: text/html; charset=utf-8');
+setlocale(LC_CTYPE, 'en_AU.utf8');
 
 $first_row = array();       // colmun name
 $values_list = array();     // list for all values
@@ -116,12 +118,8 @@ function result_varchar($cn)
         return NULL;
     }
 
-    $str = mb_convert_encoding($cn, "Windows-1252", "UTF-8");
-
-
-
-    $str = addslashes($str);
-    return $str;
+//    $cn = addslashes($cn);
+    return $cn;
 }
 
 function get_steuer($cn){
@@ -186,7 +184,7 @@ function change_value($row)
         ":RABATT" => result_bool($row["RABATT"]) ,    //RABATT bool, # falsch = 0 , wahr ? true
         ":VKPREIS3" => result_bool($row["VKPREIS3"]) ,    //VKPREIS3 bool,
         ":VKVALIDD3" => result_bool($row["VKVALIDD3"]) ,    //VKVALIDD3 bool,
-        ":VKBISDT1" => result_date($row["VKBISDT1"]) ,    //VKBISDT1 integer,
+        ":VKBISDT1" => result_integer($row["VKBISDT1"]) ,    //VKBISDT1 integer,
         ":VKBISDT2" => result_date($row["VKBISDT2"]) ,    //VKBISDT2 date,
         ":VKBISDT3" => result_date($row["VKBISDT3"]) ,    //VKBISDT3 date,
         ":STAFRABATT" => result_date($row["STAFRABATT"]) ,    //STAFRABATT date, #isnull
@@ -326,6 +324,10 @@ function get_FF_value($row)
     return 0;
 }
 
+function convert( $str ) {
+    return iconv( "Windows-1252", "UTF-8", $str );
+}
+
 
 function read_file()
 {
@@ -335,15 +337,32 @@ function read_file()
     global $values_list;
     $row = 1;
 
+//    $handle = fopen ($file,"r");
+//    echo '<table border="1"><tr><td>First name</td><td>Last name</td></tr><tr>';
+//    while ($data = fgetcsv ($handle, 1000, ";")) {
+//        $data = array_map( "convert", $data );
+//
+//        $num = count ($data);
+//
+//
+//        for ($c=0; $c < $num; $c++) {
+//            // output data
+//            echo "<td>$data[$c]</td>";
+//        }
+//        echo "</tr><tr>";
+//    }
+
     if (($handle = fopen($file, "r")) !== FALSE) {
         while (($data = fgetcsv($handle, 10000000, ";")) !== FALSE) {
-//            $data = iconv( "Windows-1252", "UTF-8", $data );
+
+            $data = array_map( "convert", $data );
+
             $num = count($data);
 
-            if(strpos($data[7], "G-Ein") != false)
-            {
-                echo $data[7];
-            }
+//            if(strpos($data[1], "TEST") !== false)
+//            {
+//                echo "stop";
+//            }
 
             if($first_row == null)
             {
@@ -380,7 +399,9 @@ function home()
     $dbname = "csvimport";
 
     try{
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password,
+            array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+
     }catch (Exception $e){ echo "error database connection"; return; }
 
     global $values_list;
@@ -398,6 +419,11 @@ function home()
 
             if($values[":id"] != "")
             {
+                if(strpos($values[":id"], "TEST") !== false)
+                {
+                    $xxxxxxxxxxxxxxxx =  "stop";
+                }
+
                 if(!$sqlCommand->execute($values)){
                     echo PHP_EOL . "error in id : " . $row["WM"] . $row["NUMMER"] . PHP_EOL;
                     echo implode(';', $values) . PHP_EOL;
