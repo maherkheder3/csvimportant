@@ -4,14 +4,18 @@ ini_set('display_errors', 0);
 header('Content-Type: text/html; charset=utf-8');
 setlocale(LC_CTYPE, 'en_AU.utf8');
 
-$first_row = array();       // colmun name
-$values_list = array();     // list for all values
+$first_row = array();       // columns name from csv file to use als key in values list
+$values_list = array();     // list for all values ( from csv file )
 
+/**
+ * Database information
+ */
 $servername = "localhost";
 $username = "admin";
 $password = "1";
 $dbname = "csvimport";
 
+// to test a connection
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     // set the PDO error mode to exception
@@ -21,16 +25,16 @@ try {
     $sql = file_get_contents('sqlquery.sql');
     $qr = $conn->exec($sql);
 
-    echo "connicatien is ok".PHP_EOL;
+    echo "connection is ok".PHP_EOL;
 }
 catch(PDOException $e)
 {
     echo $sql . "<br>" . $e->getMessage();
-    return ;
+    return;
 }
 
 /**
- * if integer , with monthes
+ * to quote and return the integer values , ( convert monthes to integer )
  * @param $cn
  *
  * @return int
@@ -87,6 +91,7 @@ function result_bool($cn){
 }
 
 /**
+ * to quote and return the date values
  * @param $cn
  *
  * @return false|null|string
@@ -102,7 +107,7 @@ function result_date($cn){
 }
 
 /**
- * Return a string
+ *  take and return string ( quote and clear )
  *
  * @param $cn
  *
@@ -122,6 +127,12 @@ function result_varchar($cn)
     return $cn;
 }
 
+/**
+ * get and return string ( tax )
+ * @param $cn
+ *
+ * @return string
+ */
 function get_steuer($cn){
     if($cn == "1B"){ $cn = "7%"; }
     elseif ($cn == "1A"){ $cn = "19%"; }
@@ -130,6 +141,7 @@ function get_steuer($cn){
 }
 
 /**
+ * get the prices plan
  * @param $row
  *
  * @return float
@@ -149,7 +161,7 @@ function get_last_prise($row)
 }
 
 /**
- * This method returns an array like
+ * returns an array like
  * :mwst => $row["WM"] . $row["NUMMER"]
  *
  * @param $row
@@ -159,7 +171,6 @@ function get_last_prise($row)
 function change_value($row)
 {
     //WM,NUMMER,MWST,RES_ZEIT,WARENGR,INTERNET,SAISON_KZ,BANAME1,BANAME2,BANAME3,DKZ1,DKZ2,DKZ3,SYS_ANLAGE,DKZ4,PREIS_GRP,BIS_MENGE,VKVALIDD1,VKPREIS1,VKVALIDD2,VKPREIS2,STKPREIS,GP_MENGE,GP_EINHEIT,PACK_MENGE,RABATT,VKPREIS3,VKVALIDD3,VKBISDT1,VKBISDT2,VKBISDT3,STAFRABATT,FAKTOR,ISZUSATZ00,ISZUSATZ01,ISZUSATZ02,ISZUSATZ03,ISZUSATZ04,ISZUSATZ05,ISZUSATZ06,ISZUSATZ07,ISZUSATZ08,ISZUSATZ09,ISZUSATZ10,ISZUSATZ11,ISZUSATZ12,ISZUSATZ13,ISZUSATZ14,ISZUSATZ15,ISZUSATZ16,ISZUSATZ17,ISZUSATZ18,ISZUSATZ19,ISZUSATZ20,ISZUSATZ21,ISZUSATZ22,ISZUSATZ23,ISZUSATZ24,ISZUSATZ25,ISZUSATZ26,ISZUSATZ27,ISZUSATZ28,ISZUSATZ29,ISZUSATZ30,ISZUSATZ31,ISZUSATZ32,ISZUSATZ33,ISZUSATZ34,ISZUSATZ35,ISZUSATZ36,ISZUSATZ37,ISZUSATZ38,ISZUSATZ39,ISZUSATZ40,ISZUSATZ41,ISZUSATZ42,ISZUSATZ43,ISZUSATZ44,ISZUSATZ45,ISZUSATZ46,ISZUSATZ47,ISZUSATZ48,ISZUSATZ49,ISZUSATZ50,KAT_1,KAT_2,KAT_3,KAT_4,KAT_5,,BF_LILA,BF_ROSA,BF_WEISS,BF_GELB,BF_ORANGE,BF_ROT,BF_MEHRF,BF_GRUEN,BF_PINK,BF_SCHWARZ,FF_BLAU,FF_ORANGE,FF_WEISS,FF_GELB,FF_ROT,FF_GRUEN,FF_SCHWARZ,ISZUSATZ51,ISZUSATZ52,ISZUSATZ53,ISZUSATZ54,ISZUSATZ55,ISZUSATZ56,LAUB_IG,LAUB_LA,LAUB_WG,BESTELLT,GELIEFERT,OFFEN,LIETERMIN,GEWICHT,VERF_BEST,MARKE
-
     return [
         ":id" => $row["WM"] . $row["NUMMER"],  //id varchar(255),
         ":mwst" =>  get_steuer($row["MWST"]) ,   //mwst varchar(255),
@@ -269,6 +280,7 @@ function change_value($row)
 }
 
 /**
+ * /** return the colors value
  * @param $row
  *
  * @return int
@@ -297,6 +309,7 @@ function get_BF_value($row)
 }
 
 /**
+ * return the colors value
  * @param $row
  *
  * @return int
@@ -324,11 +337,20 @@ function get_FF_value($row)
     return 0;
 }
 
+/**
+ * convert the encoding to UTF-8
+ * @param $str
+ *
+ * @return false|string
+ */
 function convert( $str ) {
     return iconv( "Windows-1252", "UTF-8", $str );
 }
 
 
+/**
+ * read the csv file and and save the values in $values_list
+ */
 function read_file()
 {
     // scv datei complet path
@@ -336,21 +358,6 @@ function read_file()
     global $first_row;
     global $values_list;
     $row = 1;
-
-//    $handle = fopen ($file,"r");
-//    echo '<table border="1"><tr><td>First name</td><td>Last name</td></tr><tr>';
-//    while ($data = fgetcsv ($handle, 1000, ";")) {
-//        $data = array_map( "convert", $data );
-//
-//        $num = count ($data);
-//
-//
-//        for ($c=0; $c < $num; $c++) {
-//            // output data
-//            echo "<td>$data[$c]</td>";
-//        }
-//        echo "</tr><tr>";
-//    }
 
     if (($handle = fopen($file, "r")) !== FALSE) {
         while (($data = fgetcsv($handle, 10000000, ";")) !== FALSE) {
@@ -389,8 +396,13 @@ function read_file()
     }
 }
 
+
+/**
+ * Home function , start the code from her
+ */
 function home()
 {
+    // read the file and save the values in $value_list
     read_file();
 
     $servername = "localhost";
@@ -440,26 +452,10 @@ function home()
     echo PHP_EOL . sprintf('Wrote succesfully %s lines from %s rows (%s errors)', $success, count($values_list), $errors) . PHP_EOL;
 }
 
+/**
+ * call the home function and start the script from her
+ */
 home();
+
+// clear the connection
 $conn = null;
-
-
-
-//-- (1,  "BLAU"),
-//-- (2,  "LILA"),
-//-- (3,  "ROSA"),
-//-- (4,  "WEISS"),
-//-- (5,  "GELB"),
-//-- (6,  "ORANGE"),
-//-- (7,  "ROT"),
-//-- (8,  "MEHRF"),
-//-- (9,  "GRUEN"),
-//-- (10, "PINK"),
-//-- (11, "SCHWARZ"),
-//-- (12, "BLAU"),
-//-- (13, "ORANGE"),
-//-- (14, "WEISS"),
-//-- (15, "GELB"),
-//-- (16, "ROT"),
-//-- (17, "GRUEN"),
-//-- (18, "SCHWARZ")

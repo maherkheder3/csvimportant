@@ -2,7 +2,7 @@
 <project version="4">
   <component name="dataSourceStorageLocal">
     <data-source name="csvimport@localhost" uuid="4729c205-1fa6-4c31-accb-a0bb1f60d410">
-      <database-info product="MySQL" version="5.7.23-0ubuntu0.18.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.46 ( Revision: 9cc87a48e75c2d2e87c1a293b2862ce651cb256e )" family="MYSQL" exact-version="5.7.23">
+      <database-info product="MySQL" version="5.7.23-0ubuntu0.18.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.46 ( Revision: 9cc87a48e75c2d2e87c1a293b2862ce651cb256e )" dbms="MYSQL" exact-version="5.7.23">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
       </database-info>
