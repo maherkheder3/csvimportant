@@ -152,7 +152,6 @@ function get_last_prise($row)
     //Wenn VKVALIDD2 > VKVALIDD1 muss VKPREIS2 => price; ansonsten VKPREIS1 => price (float)
     if(strtotime($row["VKVALIDD2"]) > strtotime($row["VKVALIDD1"]))
     {
-        $gg = str_replace(",", ".", $row["VKPREIS2"]);
         return floatval(str_replace(",", ".", $row["VKPREIS2"]));
     }
     else{
@@ -383,9 +382,23 @@ function read_file()
                 $array[$first_row[$c]] = $data[$c];
             }
 
-            array_push($values_list, $array);
+            $the_fist_time = true;
+            //$row["WM"] . $row["NUMMER"]
+            foreach ($values_list as $key => $item){
+                if($item["NUMMER"] == $array["NUMMER"]){
 
-            if(count($values_list) > 13000){
+                    // ich bin hier und ich muss prise table machen
+                    $the_fist_time = false;
+                    $values_list[$key] = $array;
+                    break;
+                }
+            }
+
+            if($the_fist_time){
+                array_push($values_list, $array);
+            }
+
+            if(count($values_list) > 530){
                 break;
             }
             echo ".";

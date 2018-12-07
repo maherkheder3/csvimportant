@@ -116,29 +116,43 @@ create table colors (
 );
 
 -- # BF_BLAU	BF_LILA	BF_ROSA	BF_WEISS	BF_GELB	BF_ORANGE	BF_ROT	BF_MEHRF	BF_GRUEN	BF_PINK	BF_SCHWARZ	FF_BLAU	FF_ORANGE	FF_WEISS	FF_GELB	FF_ROT	FF_GRUEN	FF_SCHWARZ
--- INSERT INTO colors (id, name)
+INSERT INTO colors (id, name)
+values
+(1,  "BLAU"),
+(2,  "LILA"),
+(3,  "ROSA"),
+(4,  "WEISS"),
+(5,  "GELB"),
+(6,  "ORANGE"),
+(7,  "ROT"),
+(8,  "MEHRF"),
+(9,  "GRUEN"),
+(10, "PINK"),
+(11, "SCHWARZ"),
+(12, "BLAU"),
+(13, "ORANGE"),
+(14, "WEISS"),
+(15, "GELB"),
+(16, "ROT"),
+(17, "GRUEN"),
+(18, "SCHWARZ")
+;
+--
+
+DROP table if exists article_price;
+
+create table article_price (
+  article_id varchar(255),
+  count_min integer,
+  count_max integer ,
+  price integer
+);
+
+-- # BF_BLAU	BF_LILA	BF_ROSA	BF_WEISS	BF_GELB	BF_ORANGE	BF_ROT	BF_MEHRF	BF_GRUEN	BF_PINK	BF_SCHWARZ	FF_BLAU	FF_ORANGE	FF_WEISS	FF_GELB	FF_ROT	FF_GRUEN	FF_SCHWARZ
+-- INSERT INTO article_price (id, name)
 -- values
--- (1,  "BLAU"),
--- (2,  "LILA"),
--- (3,  "ROSA"),
--- (4,  "WEISS"),
--- (5,  "GELB"),
--- (6,  "ORANGE"),
--- (7,  "ROT"),
--- (8,  "MEHRF"),
--- (9,  "GRUEN"),
--- (10, "PINK"),
--- (11, "SCHWARZ"),
--- (12, "BLAU"),
--- (13, "ORANGE"),
--- (14, "WEISS"),
--- (15, "GELB"),
--- (16, "ROT"),
--- (17, "GRUEN"),
--- (18, "SCHWARZ")
+--
 -- ;
---
---
 --
 --
 --
