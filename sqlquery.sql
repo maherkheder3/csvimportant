@@ -143,9 +143,8 @@ DROP table if exists article_price;
 
 create table article_price (
   article_id varchar(255),
-  count_min integer,
-  count_max integer ,
-  price integer
+  max_count integer ,
+  price float 
 );
 
 -- # BF_BLAU	BF_LILA	BF_ROSA	BF_WEISS	BF_GELB	BF_ORANGE	BF_ROT	BF_MEHRF	BF_GRUEN	BF_PINK	BF_SCHWARZ	FF_BLAU	FF_ORANGE	FF_WEISS	FF_GELB	FF_ROT	FF_GRUEN	FF_SCHWARZ

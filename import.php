@@ -1,4 +1,7 @@
 <?php
+
+$time_start = new DateTime();
+
 error_reporting(0);
 ini_set('display_errors', 0);
 header('Content-Type: text/html; charset=utf-8');
@@ -358,6 +361,7 @@ function read_file()
     global $values_list;
     $row = 1;
 
+    $last_array = null;
     if (($handle = fopen($file, "r")) !== FALSE) {
         while (($data = fgetcsv($handle, 10000000, ";")) !== FALSE) {
 
@@ -382,27 +386,53 @@ function read_file()
                 $array[$first_row[$c]] = $data[$c];
             }
 
-            $the_fist_time = true;
-            //$row["WM"] . $row["NUMMER"]
-            foreach ($values_list as $key => $item){
-                if($item["NUMMER"] == $array["NUMMER"]){
+            // first element just save in $last_array
+            if($last_array == null)
+            {
+                $last_array = $array;
+                continue;
+            }
 
-                    // ich bin hier und ich muss prise table machen
-                    $the_fist_time = false;
-                    $values_list[$key] = $array;
-                    break;
+
+            if($last_array["NUMMER"] != $array["NUMMER"])
+            {
+                // this is new
+                //----------------------------------
+                // save the last and save the new
+                array_push($values_list, $last_array);
+                $last_array = $array;
+
+            }
+            else{
+                // this is duplicated
+                //----------------------------------
+                // get the current prise and save in $array["VKPREIS1"]
+                if(strtotime($array["VKVALIDD2"]) > strtotime($array["VKVALIDD1"]))
+                {
+                    $array["VKPREIS1"] = str_replace(",", ".", $array["VKPREIS2"]);
                 }
+                else{
+                    $array["VKPREIS1"] = str_replace(",", ".", $array["VKPREIS1"]);
+                }
+
+                // save the last price in new array then save in last_array
+                if(isset($last_array["prise_plan"]))
+                {
+                    $array["prise_plan"] = $last_array["prise_plan"];
+                    $last_array = $array;
+                }
+
+                $new_prise = $array["BIS_MENGE"] . ":" . $array["VKPREIS1"] . ";"; // get new price from new array 4;3.300;
+                if(strpos($last_array["prise_plan"], $new_prise) === false){   // if not contains in the last array 4;3.300; than add 4;3.300;
+                    $last_array["prise_plan"] .= $new_prise;
+                }
+
             }
 
-            if($the_fist_time){
-                array_push($values_list, $array);
-            }
-
-            if(count($values_list) > 530){
-                break;
-            }
             echo ".";
         }
+
+        array_push($values_list, $last_array);  echo ".";
 
         fclose($handle);
         echo PHP_EOL . 'Read FILE complete' . PHP_EOL;
@@ -444,10 +474,9 @@ function home()
 
             if($values[":id"] != "")
             {
-                if(strpos($values[":id"], "TEST") !== false)
-                {
-                    $xxxxxxxxxxxxxxxx =  "stop";
-                }
+//                if(strpos($values[":id"], "TEST") !== false)
+//                {
+//                }
 
                 if(!$sqlCommand->execute($values)){
                     echo PHP_EOL . "error in id : " . $row["WM"] . $row["NUMMER"] . PHP_EOL;
@@ -455,9 +484,28 @@ function home()
                     ++$errors;
                 } else {
                     ++$success;
+
+                    // save article prise in the another table
+                    if(isset($row["prise_plan"]))
+                    {
+                        $sqlCommandArticlePrice = $conn->prepare('INSERT INTO article_price(article_id, max_count, price) VALUES (:article_id, :max_count, :price)');
+
+                        $price_list = explode(";", $row["prise_plan"]);
+                        foreach ($price_list as $item)
+                        {
+                            if(!empty($item)){
+                                $sqlCommandArticlePrice->execute([
+                                    ":article_id" => $row["NUMMER"],
+                                    ":max_count" => explode(":", $item)[0],
+                                    ":price" => explode(":", $item)[1]
+                                ]);
+                            }
+                        }
+                    }
                 }
             }
-        }catch(PDOException $e){
+        }
+        catch(PDOException $e){
             echo PHP_EOL . $e->getMessage() . PHP_EOL. "error in row : " .$row["id"] .PHP_EOL;
         }
     }
@@ -472,3 +520,7 @@ home();
 
 // clear the connection
 $conn = null;
+
+$time_end = new DateTime();
+$interval = $time_start->diff($time_end);
+echo PHP_EOL . $interval->format("%H:%I:%S") . PHP_EOL;
