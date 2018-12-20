@@ -18,6 +18,8 @@ $username = "admin";
 $password = "1";
 $dbname = "csvimport";
 
+$file="/var/www/html/importcsvfile/Artikeldaten-Shop.csv";
+
 // to test a connection
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -356,7 +358,7 @@ function convert( $str ) {
 function read_file()
 {
     // scv datei complet path
-    $file="/var/www/html/importcsvfile/Artikeldaten-Shop.csv";
+    global $file;
     global $first_row;
     global $values_list;
     $row = 1;

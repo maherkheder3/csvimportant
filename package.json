@@ -2,6 +2,9 @@
   "dependencies": {
     "csv": "^5.0.0",
     "csv-parser": "^2.1.0",
-    "fast-csv": "^2.4.1"
+    "fast-csv": "^2.4.1",
+    "mysql": "^2.16.0",
+    "pg": "^7.7.1",
+    "windows-1252": "^1.0.0"
   }
 }
